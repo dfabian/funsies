@@ -7,50 +7,36 @@ $( document ).ready(function() {
       jsonpCallback : 'callbackFunction',
       success: function(response) {
           console.log( response ); // server response
-          //http://stackoverflow.com/questions/32857311/how-to-check-and-set-if-current-time-is-out-of-specific-range-javascript-jquery?rq=1
         var items = [];
           $.each(response.data.children, function(index, el) {
-              var title = $('<div />').append(el.data.title);
-              var date = new Date;
-              var currentHour = date.getUTCHours();
-              var createdDate = new Date(el.data.created * 1000);
-              var hourPosted = createdDate.getUTCHours();
-              if (hourPosted < currentHour + 1) {
-                  // console.log("index ", index);
-                  // console.log("element ", el.data.author);
-                  console.log("time ", createdDate);
-                  console.log("hour ", hourPosted);
-                  console.log("current ", currentHour);
+            //   var title = $('<div />').append(el.data.title);
+              var currentTime = new Date();
+              var UTCseconds = Math.floor((currentTime.getTime() + currentTime.getTimezoneOffset()*60*1000)/1000);
+              var createdDate = new Date(el.data.created).getTime();
+              console.log("created ", createdDate);
+              console.log("current ", UTCseconds);
 
-                  // console.log("less than an hour in the past ", createdDate);
+              var difference = UTCseconds - createdDate;
+              console.log("difference ", difference);
 
-                  // look at timestamp value -- if the item is less than a week old attach a 'new' class to the element with new css style, if the item is less than a month old, attach a 'somewhat-new' css class, otherwise, give it a default style... page 202, loop throuh the nodes and look for the ones with the 'new' class... add flag icon through looping. display: author, link_flair, and image...
-                  //read up on date object, mdn
-                  // $('<div></div>').addClass('test2').insertAfter('#results').text(title);
-                  $('#results').append(title, createdDate).addClass('test');
+              var hourColor = 'default';
 
-              } else if (hourPosted > currentHour + 2) {
-                $('#results').append(title, createdDate);
-                console.log("more than an hour in the past ", createdDate);
-                console.log("time ", createdDate);
-                console.log("hour ", hourPosted);
-                console.log("current ", currentHour);
-              } else if(hourPosted > currentHour + 6){
-                $('#results').append(title, createdDate);
-                console.log("more than two hours in the past ", createdDate);
-                console.log("time ", createdDate);
-                console.log("hour ", hourPosted);
-                console.log("current ", currentHour);
+              if (difference < 60 * 60) {
+                  console.log("less than an hour ");
+                  hourColor = 'lessHour';
+              } else if (difference < 60 * 120) {
+                  console.log("less than two hours ");
+                  hourColor = 'lessTwo';
+              } else if(difference < 60 * 180){
+                console.log("less than three hours ");
+                hourColor = 'lessThree';
               } else {
-                $('#results').append(title, createdDate);
-                console.log("more than three hours in the past ", createdDate);
-                console.log("time ", createdDate);
-                console.log("hour ", hourPosted);
-                console.log("current ", currentHour);
+                console.log("more than three hours ");
               };
-
+              $('#results').append('<p class="'+hourColor+'">' + el.data.title + '</p>');
           });
-
+          //add the flag icon for under a hour
+          //add links nav to display each time-state
       },
       error: function(xhr, status, error) {
           alert("fail");
