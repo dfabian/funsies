@@ -33,7 +33,31 @@ $( document ).ready(function() {
               } else {
                 console.log("more than three hours ");
               };
-              $('#results').append('<p class="'+hourColor+'">' + el.data.title + '</p>');
+
+
+              if (hourColor === 'lessHour') {
+                $('#results').append('<p class="'+hourColor+' new">' + el.data.title + '<i class="glyphicon glyphicon-flag"></i>' + '</p>');
+              } else {
+                $('#results').append('<p class="'+hourColor+'">' + el.data.title + '</p>');
+              }
+
+              $('a').on('click', function(){
+                if (this.textContent === 'New') {
+                  $('p').hide();
+                  $('p.lessHour').show();
+                } else if (this.textContent === 'Last Two') {
+                  $('p').hide();
+                  $('p.lessTwo').show();
+                } else if (this.textContent === 'Last Three') {
+                  $('p').hide();
+                  $('p.lessThree').show();
+                } else {
+                  $('p').show();
+                }
+              })
+
+
+
           });
           //add the flag icon for under a hour
           //add links nav to display each time-state
