@@ -32,7 +32,17 @@
       <a href="#">Last Three</a>
       <a href="#">All</a>
     </div>
+
+
     <div id="results" class="col-xs-12"></div>
+
+    <!-- The handlebar template -->
+    <script id="results-template" type="text/x-handlebars-template">
+    {{#each object}}
+      {{@data}}: {{title}}
+    {{/each}}
+
+    </script>
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
@@ -48,6 +58,7 @@
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/handlebars/handlebars.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
