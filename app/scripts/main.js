@@ -67,7 +67,9 @@ $( document ).ready(function() {
       dataType: 'jsonp',
       jsonpCallback : 'callbackFunction',
       success: function(response) {
-        data = response.data;
+        var data = response.data;
+        var tempData = template(data);
+        console.log(tempData);
         resultsPlaceholder.html(template(data));
         console.log(data);
       }

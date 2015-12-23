@@ -38,8 +38,9 @@
 
     <!-- The handlebar template -->
     <script id="results-template" type="text/x-handlebars-template">
-    {{#each object}}
-      {{@data}}: {{title}}
+    <h1>Howdy</h1>
+    {{#each children}}
+      {{data.author}}
     {{/each}}
 
     </script>
